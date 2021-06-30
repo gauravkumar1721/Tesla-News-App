@@ -1,5 +1,7 @@
 package com.example.completeapp.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -74,7 +76,15 @@ class FragmentA() : Fragment(), AdapterData.AdapterDataInterface{
         Log.d("my frag first", author)
         Log.d("my frag first", description)
         Log.d("my frag first", imageView)
-        val bundle = bundleOf(Pair("my text data",author), Pair("my title",title), Pair("my desc", description), Pair("my image", imageView), Pair("my content", content))
-        NavCont?.navigate(R.id.action_fragmentA_to_fragmentB, bundle)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("AlertDialog")
+        builder.setMessage("Do you wanna jump to next frag")
+        builder.setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
+            val bundle = bundleOf(Pair("my text data",author), Pair("my title",title), Pair("my desc", description), Pair("my image", imageView), Pair("my content", content))
+            NavCont?.navigate(R.id.action_fragmentA_to_fragmentB, bundle)
+        })
+        builder.setNegativeButton("No", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
-}
+    }
